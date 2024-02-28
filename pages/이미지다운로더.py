@@ -13,8 +13,12 @@ load_dotenv()
 
 import sys
 sys.path.append("..")
-from utils import authenticate
 
+from PIL import Image
+favicon = Image.open("소영.png")
+st.set_page_config("파닥몬사이트", page_icon=favicon)
+
+from utils import authenticate
 authenticate()
 
 st.title("이미지다운로더")
