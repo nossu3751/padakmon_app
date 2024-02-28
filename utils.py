@@ -29,3 +29,35 @@ def authenticate():
     elif st.session_state["authentication_status"] is None:
         st.warning('Please enter your username and password')
         st.stop()
+
+def initialize_ui():
+    st.markdown("""
+                <html>
+                    <head>
+                    <style>
+                         #MainMenu, header, footer {visibility: hidden;}
+
+                        ::-webkit-scrollbar {
+                            width: 20px;
+                            }
+
+                            /* Track */
+                            ::-webkit-scrollbar-track {
+                            background: #f1f1f1;
+                            }
+
+                            /* Handle */
+                            ::-webkit-scrollbar-thumb {
+                            background: #888;
+                            }
+
+                            /* Handle on hover */
+                            ::-webkit-scrollbar-thumb:hover {
+                            background: #555;
+                            }
+                    </style>
+                    </head>
+                    <body>
+                    </body>
+                </html>
+            """, unsafe_allow_html=True)

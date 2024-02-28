@@ -13,7 +13,8 @@ sys.path.append("..")
 from PIL import Image
 favicon = Image.open("소영.png")
 st.set_page_config("파닥몬사이트", page_icon=favicon)
-from utils import authenticate
+from utils import authenticate, initialize_ui
+initialize_ui()
 
 authenticate()
 

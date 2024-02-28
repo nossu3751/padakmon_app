@@ -1,3 +1,4 @@
+from io import BytesIO
 import time
 import streamlit as st
 from selenium import webdriver
@@ -18,7 +19,8 @@ from PIL import Image
 favicon = Image.open("소영.png")
 st.set_page_config("파닥몬사이트", page_icon=favicon)
 
-from utils import authenticate
+from utils import authenticate, initialize_ui
+initialize_ui()
 authenticate()
 
 st.title("이미지다운로더")
@@ -78,4 +80,26 @@ else:
     for src in srcs:
         correct_file = src != None and ".jpg" in src or ".png" in src or ".webp" in src or ".jpeg" in src
         if correct_file:
-            st.markdown(f"![Image]({src})", unsafe_allow_html=True)
+            col1,col2,col3 = st.columns(3)
+            with col1:
+                st.markdown(f"<img src={src} width='100px'/>", unsafe_allow_html=True)
+            with col2:
+
+                if not src.startswith(('http:', 'https:')):
+                    src = 'https:' + src
+                                
+                response = requests.get(src)
+
+                # Check if the request was successful
+                if response.status_code == 200:
+                    # Open the image directly from the bytes in memory
+                    image = Image.open(BytesIO(response.content))
+                    
+                    # Get the width and height of the image
+                    width, height = image.size
+                else:
+                    width, height = "none", "none"
+                st.write(f"넓이:{width}")
+                st.write(f"높이:{height}")
+            with col3:
+                st.link_button("링크로가기", src)
